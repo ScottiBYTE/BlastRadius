@@ -7,6 +7,11 @@ BlastRadius helps answer a simple question:
 > If this host, container, proxy, DNS provider, or network path fails, what services are affected?
 
 ---
+## Screenshot
+
+![ScottiBYTE BlastRadius Dashboard](https://raw.githubusercontent.com/ScottiBYTE/BlastRadius/main/screenshots/Dashboard.png)
+
+---
 
 ## What BlastRadius Discovers
 
