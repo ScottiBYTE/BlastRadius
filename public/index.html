@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ScottiBYTE BlastRadius</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/styles.css">
+
+  <style>
+    #servicesView .services-main-panel,
+    #serversView .servers-main-panel {
+      height: calc(100vh - 245px);
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #servicesView .services-main-panel .panel-head,
+    #serversView .servers-main-panel .panel-head {
+      flex: 0 0 auto;
+      position: relative;
+      z-index: 30;
+      background: #0b1220;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      padding-bottom: 12px;
+    }
+
+    #servicesView .services-table-scroll,
+    #serversView .servers-table-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      background: #0b1220;
+      position: relative;
+      isolation: isolate;
+      scrollbar-gutter: stable;
+      padding-right: 12px;
+    }
+
+    #servicesView .services-scroll-table,
+    #serversView .servers-scroll-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: #0b1220;
+    }
+
+    #servicesView .services-scroll-table thead,
+    #serversView .servers-scroll-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 25;
+      background: #0b1220;
+    }
+
+    #servicesView .services-scroll-table thead tr,
+    #serversView .servers-scroll-table thead tr {
+      background: #0b1220;
+    }
+
+    #servicesView .services-scroll-table thead th,
+    #serversView .servers-scroll-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 26;
+      background: #0b1220 !important;
+      box-shadow:
+        0 1px 0 rgba(148, 163, 184, 0.18),
+        0 8px 12px rgba(11, 18, 32, 0.95);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    #servicesView .services-scroll-table tbody td,
+    #serversView .servers-scroll-table tbody td {
+      background: #0b1220;
+    }
+
+    #servicesView .services-scroll-table tbody tr,
+    #serversView .servers-scroll-table tbody tr {
+      background: #0b1220;
+    }
+
+    #servicesView .services-scroll-table tbody tr:hover td,
+    #serversView .servers-scroll-table tbody tr:hover td {
+      background: rgba(58, 123, 255, 0.10);
+    }
+
+    #servicesView .services-scroll-table tbody tr.selected-service-row td,
+    #serversView .servers-scroll-table tbody tr.selected-instance-row td {
+      background: rgba(58, 123, 255, 0.20) !important;
+    }
+
+    #servicesView .service-detail-panel,
+    #serversView .servers-detail-panel {
+      height: calc(100vh - 245px);
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #servicesView .service-detail-panel h2,
+    #servicesView .service-detail-panel p,
+    #serversView .servers-detail-panel h2,
+    #serversView .servers-detail-panel p {
+      flex: 0 0 auto;
+    }
+
+    #servicesView #serviceDetailPanel,
+    #serversView #instanceDetailPanel {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 16px;
+      background: #0b1220;
+      scrollbar-gutter: stable;
+    }
+
+    #servicesView #serviceDetailPanel::-webkit-scrollbar,
+    #servicesView .services-table-scroll::-webkit-scrollbar,
+    #serversView #instanceDetailPanel::-webkit-scrollbar,
+    #serversView .servers-table-scroll::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    #servicesView #serviceDetailPanel::-webkit-scrollbar-thumb,
+    #servicesView .services-table-scroll::-webkit-scrollbar-thumb,
+    #serversView #instanceDetailPanel::-webkit-scrollbar-thumb,
+    #serversView .servers-table-scroll::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.28);
+      border-radius: 999px;
+    }
+
+    #servicesView #serviceDetailPanel::-webkit-scrollbar-thumb:hover,
+    #servicesView .services-table-scroll::-webkit-scrollbar-thumb:hover,
+    #serversView #instanceDetailPanel::-webkit-scrollbar-thumb:hover,
+    #serversView .servers-table-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.45);
+    }
+
+    #servicesView #serviceDetailPanel::-webkit-scrollbar-track,
+    #servicesView .services-table-scroll::-webkit-scrollbar-track,
+    #serversView #instanceDetailPanel::-webkit-scrollbar-track,
+    #serversView .servers-table-scroll::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.95);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">☁</div>
+        <div>
+          <div class="brand-small">Scotti<span>BYTE</span></div>
+          <div class="brand-title">BlastRadius</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a id="navDashboard" class="active" href="#">⌂ <span>Dashboard</span></a>
+        <a id="navServices" href="#">▦ <span>Services</span></a>
+        <a id="navServers" href="#">▦ <span>Servers</span></a>
+        <a id="navBrokenPaths" href="#">⌘ <span>Broken Paths</span></a>
+        <a id="navBlastRadius" href="#">◌ <span>BlastRadius</span></a>
+        <a id="navTopology" href="#">⛓ <span>Topology</span></a>
+      </nav>
+
+      <div class="nav-section">Infrastructure</div>
+      <nav class="nav compact">
+        <a id="navIncusHosts" href="#">▰ <span>Incus Hosts</span></a>
+        <a id="navIncusInstances" href="#">▣ <span>Incus Instances</span></a>
+        <a id="navDockerStacks" href="#">◈ <span>Docker Stacks</span></a>
+        <a id="navUnifiNetwork" href="#">⌁ <span>UniFi Network</span></a>
+        <a id="navNpmProxyHosts" href="#">⬡ <span>NPM / Proxy Hosts</span></a>
+        <a id="navDnsDomains" href="#">◎ <span>DNS & Domains</span></a>
+        <a id="navCloudExternal" href="#">☁ <span>Cloud & External</span></a>
+      </nav>
+
+      <div class="nav-section">Admin</div>
+      <nav class="nav compact">
+        <a id="navAlerts" href="#">♢ <span>Alerts</span><b id="alertCount">0</b></a>
+        <a id="navBackups" href="#">▱ <span>Backups</span></a>
+        <a id="navSettings" href="#">⚙ <span>Settings</span></a>
+      </nav>
+
+      <div class="health-card">
+        <div class="health-title">Homelab Health</div>
+        <div class="gauge">
+          <div class="gauge-value" id="healthPercent">--%</div>
+          <div class="gauge-label" id="healthLabel">Loading</div>
+        </div>
+        <div class="health-note" id="healthNote">Waiting for discovery</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Overview</h1>
+          <p id="pageSubtitle">Homelab dependency and impact dashboard</p>
+        </div>
+        <div class="top-actions">
+          <span id="lastUpdate">Last update: loading...</span>
+          <button title="Refresh" id="refreshBtn">↻</button>
+          <button title="Theme">☾</button>
+          <button title="Alerts">🔔</button>
+          <button title="User">●</button>
+        </div>
+      </header>
+
+      <section id="summaryCards" class="summary-grid"></section>
+
+      <section id="dashboardView">
+        <section class="content-grid">
+          <div class="panel dependency-panel">
+            <div class="panel-head">
+              <div>
+                <h2>Dependency Map</h2>
+                <p>Core path and Incus remotes. Search below for specific services.</p>
+              </div>
+              <div class="map-controls">
+                <button id="layoutBtn">⟳ Layout</button>
+                <button>−</button>
+                <span>100%</span>
+                <button>+</button>
+                <button>⛶</button>
+              </div>
+            </div>
+            <div id="dependencyMap" class="dependency-map"></div>
+          </div>
+
+          <div class="panel issues-panel">
+            <div class="panel-head slim">
+              <h2>Current Issues</h2>
+              <a id="viewBrokenPathsLink" href="#">View all</a>
+            </div>
+            <div id="issuesList"></div>
+          </div>
+
+          <div class="panel simulator-panel">
+            <h2>Lookup Domain or IP</h2>
+            <p>Find the NPM proxy, target IP, and Incus owner</p>
+            <div class="simulate-row">
+              <input id="lookupInput" placeholder="gryt.scottibyte.com or 192.168.80.241">
+              <button id="lookupBtn">🔎 Lookup</button>
+            </div>
+            <div id="lookupResult" class="impact-result"></div>
+          </div>
+
+          <div class="panel simulator-panel">
+            <h2>BlastRadius Shortcut</h2>
+            <p>Open the dedicated simulator to see affected services and domains.</p>
+            <div class="impact-result">
+              <div class="affected-row">
+                <span>Simulate component failure</span>
+                <button id="openBlastRadiusBtn">Open BlastRadius</button>
+              </div>
+              <div class="affected-row">
+                <span>Current degraded public services</span>
+                <span class="badge healthy" id="dashboardDegradedCount">0</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2>Public Services</h2>
+              <input id="serviceSearch" placeholder="Search services, domains, Incus owners...">
+              <select><option>All Types</option></select>
+              <select><option>All Statuses</option></select>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Type</th>
+                  <th>Incus Owner / Target</th>
+                  <th>Status</th>
+                  <th>Dependencies</th>
+                  <th>Last Check</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="servicesTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="servicesView" style="display: none;">
+        <section class="content-grid">
+          <div class="panel services-panel services-main-panel">
+            <div class="panel-head table-head">
+              <h2>Public Services</h2>
+              <input id="servicesPageSearch" placeholder="Search domain, target, Incus owner, IP, or status...">
+              <select id="servicesPageStatusFilter">
+                <option value="all">All Statuses</option>
+                <option value="healthy">Healthy</option>
+                <option value="degraded">Degraded</option>
+                <option value="offline">Offline</option>
+              </select>
+              <select id="servicesPageOwnerFilter">
+                <option value="all">All Owners</option>
+                <option value="matched">Matched to Incus</option>
+                <option value="unmatched">Unmatched Targets</option>
+              </select>
+            </div>
+
+            <div class="services-table-scroll">
+              <table class="services-scroll-table">
+                <thead>
+                  <tr>
+                    <th>Public Service</th>
+                    <th>NPM Target</th>
+                    <th>Incus Owner</th>
+                    <th>Status</th>
+                    <th>Check Mode</th>
+                    <th>Dependencies</th>
+                  </tr>
+                </thead>
+                <tbody id="servicesPageTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel simulator-panel service-detail-panel">
+            <h2>Service Details</h2>
+            <p>Click any service row to inspect ownership and path details.</p>
+            <div id="serviceDetailPanel" class="impact-result"></div>
+          </div>
+        </section>
+      </section>
+
+      <section id="serversView" style="display: none;">
+        <section class="content-grid">
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2>Incus Servers</h2>
+              <input id="serverSearch" placeholder="Search server, instance, IP, type, or service...">
+              <button id="clearServerFilterBtn">Clear Filter</button>
+            </div>
+            <div id="serversGrid" class="summary-grid"></div>
+          </div>
+
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2 id="instancesTitle">Incus Instances</h2>
+              <select id="instanceStatusFilter">
+                <option value="all">All Statuses</option>
+                <option value="running">Running</option>
+                <option value="stopped">Stopped</option>
+              </select>
+              <select id="instanceTypeFilter">
+                <option value="all">All Types</option>
+                <option value="container">Containers</option>
+                <option value="virtual-machine">Virtual Machines</option>
+              </select>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Instance</th>
+                  <th>Server</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Preferred IP</th>
+                  <th>Public Services</th>
+                  <th>Snapshots</th>
+                </tr>
+              </thead>
+              <tbody id="instancesTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="brokenPathsView" style="display: none;">
+        <section class="content-grid">
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2>Broken Paths</h2>
+              <input id="brokenPathSearch" placeholder="Search broken domains, targets, or Incus owners...">
+              <button id="refreshBrokenPathsBtn">↻ Refresh</button>
+            </div>
+            <div id="brokenPathsList" class="impact-result"></div>
+          </div>
+
+          <div class="panel simulator-panel">
+            <h2>How to Read This</h2>
+            <p>BlastRadius traces failures through the public service path.</p>
+            <div class="impact-result">
+              <div class="affected-row"><span>Public URL</span><span>External service name</span></div>
+              <div class="affected-row"><span>NPM Target</span><span>Forward host and port</span></div>
+              <div class="affected-row"><span>Incus Owner</span><span>Matched by target IP</span></div>
+              <div class="affected-row"><span>Failure</span><span>TCP, HTTP, or public URL check</span></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="blastRadiusView" style="display: none;">
+        <section class="content-grid">
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2>Simulate Failure</h2>
+              <select id="blastComponentSelect"></select>
+              <button id="blastSimulateBtn">⚒ Simulate</button>
+            </div>
+            <div id="blastResult" class="impact-result"></div>
+          </div>
+
+          <div class="panel simulator-panel">
+            <h2>Impact Summary</h2>
+            <p>Choose any component to see what public services depend on it.</p>
+            <div class="impact-result">
+              <div class="affected-row"><span>Nginx Proxy Manager</span><span>Usually high impact</span></div>
+              <div class="affected-row"><span>Incus Remote</span><span>All services on that server</span></div>
+              <div class="affected-row"><span>Incus Instance</span><span>Services owned by that instance</span></div>
+              <div class="affected-row"><span>Proxy Host</span><span>Single public service path</span></div>
+            </div>
+          </div>
+
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2>Affected Services</h2>
+              <input id="blastSearch" placeholder="Search affected domains or owners...">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Status</th>
+                  <th>Incus Owner / Target</th>
+                  <th>Dependency Chain</th>
+                </tr>
+              </thead>
+              <tbody id="blastAffectedTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="topologyView" style="display: none;">
+        <section class="content-grid">
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2>Topology</h2>
+              <select id="topologyLevel">
+                <option value="overview">Overview</option>
+                <option value="services">Services</option>
+                <option value="full">Full</option>
+              </select>
+              <button id="topologyFitBtn">⛶ Fit</button>
+            </div>
+
+            <div class="simulate-row">
+              <label><input id="toggleCore" type="checkbox" checked> Core Infrastructure</label>
+              <label><input id="toggleRemotes" type="checkbox" checked> Incus Remotes</label>
+              <label><input id="toggleServices" type="checkbox"> Public Services</label>
+            </div>
+
+            <div id="topologyCanvas" class="dependency-map" style="height: 620px; overflow: auto;"></div>
+          </div>
+
+          <div class="panel simulator-panel">
+            <h2>Topology Summary</h2>
+            <p>Live dependency model from NPM and Incus discovery.</p>
+            <div id="topologySummary" class="impact-result"></div>
+          </div>
+
+          <div class="panel services-panel">
+            <div class="panel-head table-head">
+              <h2>Model Links</h2>
+              <input id="topologySearch" placeholder="Search domain, server, instance, or IP...">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Public Service</th>
+                  <th>NPM Target</th>
+                  <th>Incus Owner</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="topologyLinksTable"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

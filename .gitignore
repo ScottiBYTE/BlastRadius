@@ -1,0 +1,31 @@
+# Local development archives and snapshots
+archive/
+*.tar.gz
+*.working-*
+*.before-*
+*.backup
+*.bak
+
+# Secrets / live local configuration
+data/config.json
+data/config.json.*
+data/homelab.json
+data/homelab.json.*
+data/incus-client/
+*.key
+*.crt
+
+# Keep sanitized example config
+!data/config.example.json
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/

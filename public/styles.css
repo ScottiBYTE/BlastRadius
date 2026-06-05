@@ -1,0 +1,1508 @@
+:root {
+  --bg: #070c13;
+  --panel: #0d1520;
+  --panel-2: #101a27;
+  --border: #1e2d3f;
+  --text: #e8eef8;
+  --muted: #8c9bab;
+  --blue: #158cff;
+  --purple: #7357ff;
+  --green: #24d17e;
+  --yellow: #f4b63f;
+  --red: #ff5c63;
+  --cyan: #28d8ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(47, 102, 255, 0.13), transparent 30%),
+    radial-gradient(circle at 70% 10%, rgba(115, 87, 255, 0.09), transparent 35%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 292px minmax(900px, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  border-right: 1px solid var(--border);
+  background: rgba(7, 12, 19, 0.82);
+  backdrop-filter: blur(14px);
+  padding: 18px 18px 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 0 26px;
+}
+
+.brand-mark {
+  width: 54px;
+  height: 44px;
+  border: 2px solid var(--blue);
+  color: var(--cyan);
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  box-shadow: 0 0 28px rgba(21, 140, 255, 0.28);
+}
+
+.brand-small {
+  color: #b7c3d0;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+.brand-small span {
+  color: var(--purple);
+  font-weight: 800;
+}
+
+.brand-title {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.nav,
+.nav.compact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav a {
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.nav a.active {
+  background: linear-gradient(90deg, var(--purple), rgba(21, 140, 255, 0.78));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav a b {
+  margin-left: auto;
+  background: var(--purple);
+  border-radius: 14px;
+  font-size: 12px;
+  min-width: 23px;
+  padding: 2px 7px;
+  text-align: center;
+}
+
+.nav-section {
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin: 24px 10px 10px;
+}
+
+.health-card {
+  margin-top: 24px;
+  padding: 24px 16px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.health-title {
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.gauge {
+  width: 150px;
+  height: 86px;
+  margin: 0 auto 12px;
+  border-radius: 150px 150px 0 0;
+  border: 18px solid rgba(255,255,255,0.08);
+  border-bottom: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.gauge::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 150px 150px 0 0;
+  border: 18px solid var(--green);
+  border-right-color: transparent;
+  border-bottom: 0;
+  transform: rotate(-12deg);
+}
+
+.gauge-value {
+  position: absolute;
+  bottom: 3px;
+  width: 100%;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.gauge-label {
+  position: absolute;
+  width: 100%;
+  bottom: -20px;
+  color: var(--cyan);
+}
+
+.health-note {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.main {
+  padding: 20px 22px 30px;
+}
+
+.topbar {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.topbar p {
+  margin: 5px 0 0;
+  color: var(--muted);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+}
+
+.top-actions button,
+.map-controls button,
+.simulate-row button {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.summary-card {
+  background: linear-gradient(180deg, rgba(16, 26, 39, 0.96), rgba(10, 17, 26, 0.96));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  min-height: 124px;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  height: 22px;
+  background: linear-gradient(90deg, transparent, currentColor, transparent);
+  opacity: 0.2;
+  clip-path: polygon(0 60%, 12% 45%, 20% 50%, 34% 68%, 52% 40%, 60% 42%, 74% 70%, 88% 35%, 100% 52%, 100% 100%, 0 100%);
+}
+
+.summary-card .icon {
+  font-size: 30px;
+  float: left;
+  margin-right: 20px;
+}
+
+.summary-card h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.summary-card p {
+  margin: 2px 0;
+  color: var(--text);
+}
+
+.summary-card small {
+  color: var(--muted);
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(680px, 1.8fr) minmax(360px, 1fr);
+  gap: 16px;
+}
+
+.panel {
+  background: rgba(13, 21, 32, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 18px 0;
+}
+
+.panel-head h2,
+.simulator-panel h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.panel-head p,
+.simulator-panel p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.panel-head.slim {
+  padding-bottom: 14px;
+}
+
+.panel-head.slim a {
+  color: #9d85ff;
+  text-decoration: none;
+}
+
+.map-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dependency-map {
+  position: relative;
+  height: 520px;
+  margin: 16px 16px 18px;
+  border: 1px solid rgba(255,255,255,0.035);
+  border-radius: 10px;
+  background:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.node {
+  position: absolute;
+  min-width: 172px;
+  min-height: 74px;
+  padding: 13px 15px;
+  border-radius: 8px;
+  background: #101b28;
+  border: 1px solid rgba(36, 209, 126, 0.5);
+  box-shadow: 0 0 24px rgba(36, 209, 126, 0.08);
+  cursor: pointer;
+  transition: 0.15s ease;
+  z-index: 2;
+}
+
+.node:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan);
+}
+
+.node.degraded {
+  border-color: var(--yellow);
+  box-shadow: 0 0 28px rgba(244, 182, 63, 0.16);
+}
+
+.node.offline {
+  border-color: var(--red);
+  box-shadow: 0 0 28px rgba(255, 92, 99, 0.16);
+}
+
+.node .node-name {
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.node .node-sub {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.node .node-status {
+  margin-top: 4px;
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.node.degraded .node-status {
+  color: var(--yellow);
+}
+
+.link-line {
+  position: absolute;
+  height: 2px;
+  background: var(--green);
+  transform-origin: 0 50%;
+  z-index: 1;
+  opacity: 0.75;
+}
+
+.link-line.degraded {
+  background: var(--yellow);
+}
+
+.issues-panel {
+  padding-bottom: 8px;
+}
+
+.issue-group {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 18px;
+}
+
+.issue-title {
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.issue-title.high { color: var(--red); }
+.issue-title.medium { color: var(--yellow); }
+.issue-title.low { color: var(--blue); }
+
+.issue {
+  color: #d7e0ec;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.services-panel {
+  grid-column: 1;
+}
+
+.table-head {
+  gap: 12px;
+  padding-bottom: 14px;
+}
+
+.table-head h2 {
+  min-width: 130px;
+}
+
+.table-head input,
+.table-head select,
+.simulate-row select {
+  background: #0a111b;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  padding: 10px 12px;
+}
+
+.table-head input {
+  flex: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.service-name {
+  font-weight: 800;
+}
+
+.service-url {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.badge {
+  border-radius: 12px;
+  padding: 5px 10px;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.badge.healthy {
+  background: rgba(36,209,126,0.17);
+  color: var(--green);
+}
+
+.badge.degraded {
+  background: rgba(244,182,63,0.17);
+  color: var(--yellow);
+}
+
+.badge.offline {
+  background: rgba(255,92,99,0.17);
+  color: var(--red);
+}
+
+.simulator-panel {
+  padding: 18px;
+}
+
+.simulate-row {
+  display: flex;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.simulate-row select {
+  flex: 1;
+}
+
+.simulate-row button {
+  background: linear-gradient(90deg, var(--purple), rgba(21, 140, 255, 0.82));
+  border-color: transparent;
+  font-weight: 800;
+}
+
+.impact-result {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 16px;
+}
+
+.impact-severity {
+  color: var(--red);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.affected-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.affected-row:first-of-type {
+  border-top: 0;
+}
+
+.url-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.url-chip {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: #dfe8f5;
+  font-size: 12px;
+}
+
+@media (max-width: 1200px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: relative;
+    height: auto;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-panel {
+    grid-column: auto;
+  }
+}
+
+/* Ensure lower sidebar admin items such as Settings remain reachable. */
+.sidebar {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.sidebar .health-card {
+  flex-shrink: 0;
+}
+
+/* Top-right ScottiBYTE project controls */
+.top-project-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
+  white-space: nowrap;
+  font-size: 0.86rem;
+}
+
+.top-project-controls a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.top-project-controls a:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+#topVersionLabel {
+  color: var(--muted);
+}
+
+#topDonateLink {
+  color: #f87171;
+}
+
+#topThemeToggleBtn {
+  border: 1px solid rgba(59, 130, 246, 0.55);
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 7px;
+  padding: 5px 9px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+#topThemeToggleBtn:hover {
+  filter: brightness(1.08);
+}
+
+/* Lightweight light-mode override */
+body.light-theme {
+  --bg: #f8fafc;
+  --panel: #ffffff;
+  --panel-soft: #f1f5f9;
+  --text: #0f172a;
+  --muted: #64748b;
+  --line: rgba(15, 23, 42, 0.14);
+  --accent: #2563eb;
+  --accent-2: #0891b2;
+  --good: #059669;
+  --warn: #d97706;
+  --bad: #dc2626;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+body.light-theme .sidebar,
+body.light-theme .panel,
+body.light-theme .summary-card,
+body.light-theme .health-card {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+body.light-theme .nav a {
+  color: #334155;
+}
+
+body.light-theme .nav a:hover {
+  background: #e2e8f0;
+}
+
+body.light-theme .nav a.active {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  color: #ffffff;
+}
+
+body.light-theme .nav-section,
+body.light-theme .muted,
+body.light-theme .health-note,
+body.light-theme .summary-subtitle,
+body.light-theme .panel-subtitle {
+  color: #64748b;
+}
+
+body.light-theme input,
+body.light-theme select,
+body.light-theme textarea {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.18);
+}
+
+body.light-theme table,
+body.light-theme th,
+body.light-theme td {
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.10);
+}
+
+body.light-theme th {
+  background: #f1f5f9;
+}
+
+body.light-theme .dependency-map,
+body.light-theme #topologyCanvas {
+  background-color: #f8fafc;
+}
+
+body.light-theme .node {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+body.light-theme .node-sub {
+  color: #64748b;
+}
+
+body.light-theme #topThemeToggleBtn {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+/* Light mode polish for top controls, maps, tables, and action buttons */
+body.light-theme button,
+body.light-theme .mini-action-btn,
+body.light-theme .icon-btn,
+body.light-theme .topbar button,
+body.light-theme .page-actions button,
+body.light-theme .top-actions button {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.18);
+}
+
+body.light-theme button:hover,
+body.light-theme .mini-action-btn:hover,
+body.light-theme .icon-btn:hover,
+body.light-theme .topbar button:hover,
+body.light-theme .page-actions button:hover,
+body.light-theme .top-actions button:hover {
+  background: #e2e8f0;
+}
+
+body.light-theme .rescan-btn,
+body.light-theme button.full-rescan,
+body.light-theme #fullRescanBtn {
+  background: #fff7ed;
+  color: #92400e;
+  border-color: rgba(217, 119, 6, 0.45);
+}
+
+body.light-theme #topThemeToggleBtn {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+body.light-theme .dependency-map,
+body.light-theme #topologyCanvas,
+body.light-theme .map-canvas {
+  background:
+    linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    #f8fafc;
+  color: #0f172a;
+}
+
+body.light-theme .node,
+body.light-theme .topology-node {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(16, 185, 129, 0.55) !important;
+}
+
+body.light-theme .node-name {
+  color: #0f172a !important;
+}
+
+body.light-theme .node-sub {
+  color: #64748b !important;
+}
+
+body.light-theme .node-status {
+  color: #059669 !important;
+}
+
+body.light-theme table,
+body.light-theme .data-table,
+body.light-theme .services-table,
+body.light-theme .instances-table {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+body.light-theme thead,
+body.light-theme th {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+}
+
+body.light-theme tbody tr,
+body.light-theme td {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.10) !important;
+}
+
+body.light-theme tbody tr:hover {
+  background: #f8fafc !important;
+}
+
+body.light-theme .status-pill,
+body.light-theme .badge {
+  color: inherit;
+}
+
+body.light-theme .status-pill.healthy,
+body.light-theme .badge.healthy {
+  background: rgba(5, 150, 105, 0.14);
+  color: #047857;
+}
+
+body.light-theme .lookup-status,
+body.light-theme .issue-severity,
+body.light-theme .danger-text {
+  color: #dc2626;
+}
+
+body.light-theme .current-issues,
+body.light-theme .issue-list {
+  color: #0f172a;
+}
+
+body.light-theme .muted,
+body.light-theme .subtle,
+body.light-theme .summary-subtitle,
+body.light-theme .panel-subtitle {
+  color: #64748b !important;
+}
+
+/* Light mode polish for Services, details panels, selected rows, and nested dark cards */
+body.light-theme .services-page,
+body.light-theme #servicesView,
+body.light-theme #serversView,
+body.light-theme #brokenPathsView,
+body.light-theme #blastRadiusView,
+body.light-theme #topologyView,
+body.light-theme #sidebarUtilityView {
+  color: #0f172a;
+}
+
+body.light-theme .panel,
+body.light-theme .detail-panel,
+body.light-theme .details-panel,
+body.light-theme .service-detail,
+body.light-theme .instance-detail,
+body.light-theme .affected-box,
+body.light-theme .dependency-chain-box,
+body.light-theme .dependency-step,
+body.light-theme .section-placeholder-panel {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-theme .panel h2,
+body.light-theme .panel h3,
+body.light-theme .detail-panel h2,
+body.light-theme .detail-panel h3,
+body.light-theme .service-detail h2,
+body.light-theme .service-detail h3,
+body.light-theme .dependency-chain-title {
+  color: #0f172a !important;
+}
+
+body.light-theme .affected-row,
+body.light-theme .detail-row,
+body.light-theme .dependency-step {
+  border-color: rgba(15, 23, 42, 0.10) !important;
+  color: #0f172a !important;
+}
+
+body.light-theme .affected-row span:first-child,
+body.light-theme .detail-row span:first-child,
+body.light-theme .dependency-step-type,
+body.light-theme .dependency-step-name + div {
+  color: #64748b !important;
+}
+
+body.light-theme .affected-row span:last-child,
+body.light-theme .detail-row span:last-child,
+body.light-theme .dependency-step-name {
+  color: #0f172a !important;
+}
+
+body.light-theme .dependency-step-number {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+}
+
+/* Service/instance tables */
+body.light-theme .table-wrap,
+body.light-theme .service-table-wrap,
+body.light-theme .instances-table-wrap,
+body.light-theme .data-table-wrap {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-theme table {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+body.light-theme thead,
+body.light-theme table thead,
+body.light-theme table thead tr,
+body.light-theme table th {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-theme table tbody,
+body.light-theme table tbody tr,
+body.light-theme table td {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+body.light-theme table tbody tr:hover,
+body.light-theme table tbody tr.selected,
+body.light-theme table tbody tr.active,
+body.light-theme .selected-row {
+  background: #dbeafe !important;
+  color: #0f172a !important;
+}
+
+body.light-theme table tbody tr.selected td,
+body.light-theme table tbody tr.active td,
+body.light-theme .selected-row td {
+  background: #dbeafe !important;
+  color: #0f172a !important;
+}
+
+/* Text inside table cells */
+body.light-theme .service-name,
+body.light-theme .instance-name,
+body.light-theme .primary-text,
+body.light-theme .strong-text,
+body.light-theme td strong,
+body.light-theme td b {
+  color: #0f172a !important;
+}
+
+body.light-theme .service-subtitle,
+body.light-theme .instance-subtitle,
+body.light-theme .secondary-text,
+body.light-theme .small-muted,
+body.light-theme td small {
+  color: #64748b !important;
+}
+
+/* Health/status pills */
+body.light-theme .status-healthy,
+body.light-theme .healthy,
+body.light-theme .pill.healthy,
+body.light-theme .status-pill.healthy {
+  background: rgba(5, 150, 105, 0.14) !important;
+  color: #047857 !important;
+}
+
+body.light-theme .status-warning,
+body.light-theme .warning,
+body.light-theme .pill.warning {
+  background: rgba(217, 119, 6, 0.14) !important;
+  color: #92400e !important;
+}
+
+body.light-theme .status-bad,
+body.light-theme .bad,
+body.light-theme .pill.bad {
+  background: rgba(220, 38, 38, 0.14) !important;
+  color: #b91c1c !important;
+}
+
+/* Inputs and filters inside white panels */
+body.light-theme input,
+body.light-theme select,
+body.light-theme textarea,
+body.light-theme .filter-input,
+body.light-theme .search-input {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.18) !important;
+}
+
+body.light-theme input::placeholder,
+body.light-theme textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Action/menu buttons in rows */
+body.light-theme .row-action,
+body.light-theme .row-menu,
+body.light-theme .kebab,
+body.light-theme .more-btn {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.16) !important;
+}
+
+/* Current Issues readability */
+body.light-theme .issue-item,
+body.light-theme .issue-row,
+body.light-theme .current-issues li {
+  color: #0f172a !important;
+}
+
+body.light-theme .issue-title,
+body.light-theme .issue-severity-low {
+  color: #2563eb !important;
+}
+
+body.light-theme .issue-detail,
+body.light-theme .issue-text {
+  color: #475569 !important;
+}
+
+/* Scrollable detail panes should not stay dark */
+body.light-theme .scroll-panel,
+body.light-theme .details-scroll,
+body.light-theme .service-details-scroll,
+body.light-theme .dependency-chain-steps {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+/* Keep dark-only code/report/export canvases separate if needed */
+body.light-theme .topology-print-canvas,
+body.light-theme .report-canvas {
+  color: inherit;
+}
+
+/* Light mode: neutralize embedded dark panels, dark table shells, and dark detail inspectors */
+body.light-theme .panel [style*="#020617"],
+body.light-theme .panel [style*="#0f172a"],
+body.light-theme .panel [style*="rgb(2, 6, 23)"],
+body.light-theme .panel [style*="rgb(15, 23, 42)"],
+body.light-theme [style*="background: #020617"],
+body.light-theme [style*="background:#020617"],
+body.light-theme [style*="background: #0f172a"],
+body.light-theme [style*="background:#0f172a"],
+body.light-theme [style*="background-color: #020617"],
+body.light-theme [style*="background-color:#020617"],
+body.light-theme [style*="background-color: #0f172a"],
+body.light-theme [style*="background-color:#0f172a"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Dark table shells used by Services, NPM, Servers */
+body.light-theme .services-table,
+body.light-theme .servers-table,
+body.light-theme .npm-table,
+body.light-theme .proxy-table,
+body.light-theme .instance-table,
+body.light-theme .docker-table,
+body.light-theme .table-shell,
+body.light-theme .table-panel,
+body.light-theme .table-container,
+body.light-theme .table-scroll,
+body.light-theme .data-table,
+body.light-theme .inventory-table {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Any table header that stayed dark */
+body.light-theme .services-table thead,
+body.light-theme .servers-table thead,
+body.light-theme .npm-table thead,
+body.light-theme .proxy-table thead,
+body.light-theme .instance-table thead,
+body.light-theme .docker-table thead,
+body.light-theme .data-table thead,
+body.light-theme .inventory-table thead,
+body.light-theme thead,
+body.light-theme thead tr,
+body.light-theme th {
+  background: #f1f5f9 !important;
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Any table body that stayed too dark */
+body.light-theme tbody,
+body.light-theme tbody tr,
+body.light-theme tbody td,
+body.light-theme tr,
+body.light-theme td {
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Keep table rows white unless selected */
+body.light-theme tbody tr:not(.selected):not(.active):not(.selected-row),
+body.light-theme tbody tr:not(.selected):not(.active):not(.selected-row) td {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+/* Selected row */
+body.light-theme tbody tr.selected,
+body.light-theme tbody tr.active,
+body.light-theme tbody tr.selected td,
+body.light-theme tbody tr.active td,
+body.light-theme .selected-row,
+body.light-theme .selected-row td {
+  background: #dbeafe !important;
+  background-color: #dbeafe !important;
+  color: #0f172a !important;
+}
+
+/* Right-side details inspectors */
+body.light-theme .service-details,
+body.light-theme .proxy-details,
+body.light-theme .instance-details,
+body.light-theme .server-details,
+body.light-theme .details-card,
+body.light-theme .details-panel,
+body.light-theme .detail-card,
+body.light-theme .detail-panel,
+body.light-theme .inspector,
+body.light-theme .inspector-panel {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Details rows and dependency chain */
+body.light-theme .dependency-chain,
+body.light-theme .dependency-chain-box,
+body.light-theme .dependency-chain-steps,
+body.light-theme .dependency-step,
+body.light-theme .affected-row,
+body.light-theme .detail-row,
+body.light-theme .proxy-detail-row,
+body.light-theme .service-detail-row,
+body.light-theme .instance-detail-row {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.10) !important;
+}
+
+body.light-theme .dependency-step:hover,
+body.light-theme .affected-row:hover,
+body.light-theme .detail-row:hover {
+  background: #f8fafc !important;
+}
+
+/* Detail labels */
+body.light-theme .dependency-chain-title,
+body.light-theme .dependency-step-name,
+body.light-theme .detail-title,
+body.light-theme .detail-heading,
+body.light-theme .service-title,
+body.light-theme .proxy-title,
+body.light-theme .instance-title,
+body.light-theme .panel-title,
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme h4 {
+  color: #0f172a !important;
+}
+
+/* Detail secondary text */
+body.light-theme .dependency-step-type,
+body.light-theme .detail-subtitle,
+body.light-theme .service-subtitle,
+body.light-theme .proxy-subtitle,
+body.light-theme .instance-subtitle,
+body.light-theme .panel-subtitle,
+body.light-theme .muted,
+body.light-theme .subtle,
+body.light-theme small {
+  color: #64748b !important;
+}
+
+/* Red headings such as selected service/domain */
+body.light-theme .danger,
+body.light-theme .danger-text,
+body.light-theme .selected-service-title,
+body.light-theme .selected-proxy-title {
+  color: #dc2626 !important;
+}
+
+/* Scrollbars inside detail panes */
+body.light-theme .panel,
+body.light-theme .table-scroll,
+body.light-theme .details-scroll,
+body.light-theme .service-details,
+body.light-theme .proxy-details,
+body.light-theme .instance-details {
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+/* Fix dark row action/kebab buttons */
+body.light-theme .row-action,
+body.light-theme .row-menu,
+body.light-theme .kebab,
+body.light-theme .more-btn,
+body.light-theme button.row-action,
+body.light-theme button.kebab,
+body.light-theme button.more-btn {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.16) !important;
+}
+
+/* Fix dark blue/black blocks that may be generic cards inside light panels */
+body.light-theme .card,
+body.light-theme .box,
+body.light-theme .inner-card,
+body.light-theme .nested-card {
+  color: #0f172a;
+}
+
+/* Final light-mode cleanup: override remaining dark shells in generated views */
+body.light-theme #servicesView .panel,
+body.light-theme #servicesView .panel *,
+body.light-theme #serversView .panel,
+body.light-theme #serversView .panel *,
+body.light-theme #brokenPathsView .panel,
+body.light-theme #brokenPathsView .panel *,
+body.light-theme #blastRadiusView .panel,
+body.light-theme #blastRadiusView .panel *,
+body.light-theme #sidebarUtilityView .panel,
+body.light-theme #sidebarUtilityView .panel * {
+  color: #0f172a;
+}
+
+/* Remaining dark table/header wrappers */
+body.light-theme #servicesView .panel > div,
+body.light-theme #serversView .panel > div,
+body.light-theme #brokenPathsView .panel > div,
+body.light-theme #blastRadiusView .panel > div,
+body.light-theme #sidebarUtilityView .panel > div {
+  border-color: rgba(15, 23, 42, 0.10);
+}
+
+/* Force table containers and generated table bars to light */
+body.light-theme #servicesView .table-wrap,
+body.light-theme #servicesView .table-card,
+body.light-theme #servicesView .table-panel,
+body.light-theme #servicesView .table-header,
+body.light-theme #servicesView .table-toolbar,
+body.light-theme #servicesView .table-shell,
+body.light-theme #servicesView .data-table,
+body.light-theme #servicesView .data-table-wrap,
+body.light-theme #serversView .table-wrap,
+body.light-theme #serversView .table-card,
+body.light-theme #serversView .table-panel,
+body.light-theme #serversView .table-header,
+body.light-theme #serversView .table-toolbar,
+body.light-theme #serversView .table-shell,
+body.light-theme #serversView .data-table,
+body.light-theme #serversView .data-table-wrap {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Override generic generated dark panels by descendant structure */
+body.light-theme #servicesView div[style],
+body.light-theme #serversView div[style],
+body.light-theme #brokenPathsView div[style],
+body.light-theme #blastRadiusView div[style],
+body.light-theme #sidebarUtilityView div[style] {
+  color: #0f172a;
+}
+
+/* Explicit dark background values still appearing in generated markup */
+body.light-theme div[style*="#020617"],
+body.light-theme div[style*="#0b1120"],
+body.light-theme div[style*="#0f172a"],
+body.light-theme div[style*="#111827"],
+body.light-theme div[style*="#1e293b"],
+body.light-theme div[style*="#273244"],
+body.light-theme div[style*="rgb(2, 6, 23)"],
+body.light-theme div[style*="rgb(11, 17, 32)"],
+body.light-theme div[style*="rgb(15, 23, 42)"],
+body.light-theme div[style*="rgb(17, 24, 39)"],
+body.light-theme div[style*="rgb(30, 41, 59)"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Tables: keep the visual structure but light */
+body.light-theme table,
+body.light-theme table * {
+  color: #0f172a !important;
+}
+
+body.light-theme table {
+  background: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-theme thead,
+body.light-theme thead tr,
+body.light-theme th {
+  background: #e2e8f0 !important;
+  background-color: #e2e8f0 !important;
+  color: #334155 !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-theme tbody,
+body.light-theme tbody tr,
+body.light-theme tbody td,
+body.light-theme td {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+body.light-theme tbody tr:hover td {
+  background-color: #f8fafc !important;
+}
+
+body.light-theme tbody tr.selected td,
+body.light-theme tbody tr.active td,
+body.light-theme tbody tr[aria-selected="true"] td {
+  background-color: #bfdbfe !important;
+  color: #0f172a !important;
+}
+
+/* Right-side inspectors */
+body.light-theme #servicesView .panel:last-child,
+body.light-theme #serversView .panel:last-child,
+body.light-theme .service-details,
+body.light-theme .proxy-details,
+body.light-theme .instance-details,
+body.light-theme .details-panel,
+body.light-theme .detail-panel,
+body.light-theme .inspector-panel {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Inspector top dark block */
+body.light-theme .service-details > div,
+body.light-theme .proxy-details > div,
+body.light-theme .instance-details > div,
+body.light-theme .details-panel > div,
+body.light-theme .detail-panel > div,
+body.light-theme .inspector-panel > div {
+  background-color: #ffffff;
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.10);
+}
+
+/* Detail rows */
+body.light-theme .affected-row,
+body.light-theme .detail-row,
+body.light-theme .service-detail-row,
+body.light-theme .proxy-detail-row,
+body.light-theme .instance-detail-row {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.10) !important;
+}
+
+body.light-theme .affected-row span:first-child,
+body.light-theme .detail-row span:first-child,
+body.light-theme .service-detail-row span:first-child,
+body.light-theme .proxy-detail-row span:first-child,
+body.light-theme .instance-detail-row span:first-child {
+  color: #64748b !important;
+}
+
+body.light-theme .affected-row span:last-child,
+body.light-theme .detail-row span:last-child,
+body.light-theme .service-detail-row span:last-child,
+body.light-theme .proxy-detail-row span:last-child,
+body.light-theme .instance-detail-row span:last-child {
+  color: #0f172a !important;
+}
+
+/* Dependency chain cards */
+body.light-theme .dependency-chain,
+body.light-theme .dependency-chain-box,
+body.light-theme .dependency-chain-steps {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+body.light-theme .dependency-step {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.10) !important;
+}
+
+body.light-theme .dependency-step-number {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+}
+
+body.light-theme .dependency-step-name {
+  color: #0f172a !important;
+}
+
+body.light-theme .dependency-step-type {
+  color: #64748b !important;
+}
+
+/* Broken Paths issue cards */
+body.light-theme .issue-card,
+body.light-theme .issue-row,
+body.light-theme .issue-item,
+body.light-theme .broken-path-card,
+body.light-theme .broken-path-row {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-theme .issue-card *,
+body.light-theme .issue-row *,
+body.light-theme .issue-item *,
+body.light-theme .broken-path-card *,
+body.light-theme .broken-path-row * {
+  color: inherit;
+}
+
+body.light-theme .issue-title,
+body.light-theme .broken-path-title {
+  color: #0f172a !important;
+}
+
+body.light-theme .issue-detail,
+body.light-theme .broken-path-detail {
+  color: #64748b !important;
+}
+
+/* Keep alert/low labels readable */
+body.light-theme .low,
+body.light-theme .severity-low,
+body.light-theme .issue-severity-low {
+  color: #2563eb !important;
+}
+
+/* Dark horizontal strips that survived */
+body.light-theme .dark-strip,
+body.light-theme .dark-header,
+body.light-theme .dark-panel,
+body.light-theme .dark-card {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Scrollbars */
+body.light-theme * {
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+/* Runtime light-mode normalizer classes */
+body.light-theme .light-force-panel {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+body.light-theme .light-force-table-head {
+  background: #e2e8f0 !important;
+  background-color: #e2e8f0 !important;
+  color: #334155 !important;
+  border-color: rgba(15, 23, 42, 0.14) !important;
+}
+
+body.light-theme .light-force-muted {
+  color: #64748b !important;
+}
+
+body.light-theme .light-force-danger {
+  color: #dc2626 !important;
+}
+
+body.light-theme .light-force-selected,
+body.light-theme .light-force-selected td {
+  background: #bfdbfe !important;
+  background-color: #bfdbfe !important;
+  color: #0f172a !important;
+}

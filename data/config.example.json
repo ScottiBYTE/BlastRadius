@@ -1,0 +1,64 @@
+{
+  "app": {
+    "name": "ScottiBYTE BlastRadius",
+    "port": 3050
+  },
+
+  "publicDomain": "example.com",
+
+  "wanDiscovery": {
+    "enabled": true,
+    "providerUrl": "https://ifconfig.me/ip"
+  },
+
+  "dnsDiscovery": {
+    "enabled": true,
+    "primaryDomain": "example.com"
+  },
+
+  "incus": {
+    "enabled": true,
+    "remotes": [
+      {
+        "name": "incus-server-1",
+        "description": "Primary Incus host",
+        "enabled": true
+      },
+      {
+        "name": "incus-server-2",
+        "description": "Secondary Incus host",
+        "enabled": true
+      }
+    ]
+  },
+
+  "dockerDiscovery": {
+    "enabled": true,
+    "commandTimeoutSeconds": 8
+  },
+
+  "npm": {
+    "enabled": true,
+    "url": "http://npm.example.lan:81",
+    "username": "npm-readonly@example.com",
+    "password": "CHANGE_ME"
+  },
+
+  "unifi": {
+    "enabled": false,
+    "url": "https://unifi.example.lan",
+    "username": "unifi-local-account",
+    "password": "CHANGE_ME",
+    "site": "default",
+    "rejectUnauthorized": false
+  },
+
+  "healthChecks": {
+    "enabled": true,
+    "timeoutSeconds": 5
+  },
+
+  "liveModelCache": {
+    "cacheSeconds": 45
+  }
+}

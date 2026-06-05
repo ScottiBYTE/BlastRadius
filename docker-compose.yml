@@ -1,0 +1,11 @@
+services:
+  blast-radius:
+    build: .
+    container_name: scottibyte-blast-radius
+    restart: unless-stopped
+    ports:
+      - "3050:3050"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - PORT=3050
