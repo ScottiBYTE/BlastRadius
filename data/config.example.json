@@ -1,64 +1,51 @@
 {
-  "app": {
-    "name": "ScottiBYTE BlastRadius",
-    "port": 3050
-  },
-
-  "publicDomain": "example.com",
-
-  "wanDiscovery": {
+  "npm": {
     "enabled": true,
-    "providerUrl": "https://ifconfig.me/ip"
+    "url": "http://172.16.0.15:81",
+    "email": "admin@example.com",
+    "password": "MYNPMPASSWORD",
+    "timeoutMs": 5000,
+    "defaultCheckMode": "tcp",
+    "domainOverrides": {
+      "example-service.example.com": {
+        "checkMode": "skip",
+        "note": "Optional example: skip direct checks for a service that should not be checked directly."
+      }
+    }
   },
-
-  "dnsDiscovery": {
-    "enabled": true,
-    "primaryDomain": "example.com"
-  },
-
   "incus": {
     "enabled": true,
+    "timeoutMs": 8000,
+    "cert": "./data/incus-client/client.crt",
+    "key": "./data/incus-client/client.key",
+    "verifyTls": false,
     "remotes": [
       {
-        "name": "incus-server-1",
-        "description": "Primary Incus host",
-        "enabled": true
-      },
-      {
-        "name": "incus-server-2",
-        "description": "Secondary Incus host",
-        "enabled": true
+        "name": "vmsmist",
+        "url": "https://172.16.1.50:8443",
+        "enabled": true,
+        "project": "default"
       }
     ]
   },
-
   "dockerDiscovery": {
     "enabled": true,
-    "commandTimeoutSeconds": 8
+    "timeoutMs": 5000,
+    "cacheSeconds": 900,
+    "maxInstances": 150
   },
-
-  "npm": {
-    "enabled": true,
-    "url": "http://npm.example.lan:81",
-    "username": "npm-readonly@example.com",
-    "password": "CHANGE_ME"
-  },
-
-  "unifi": {
-    "enabled": false,
-    "url": "https://unifi.example.lan",
-    "username": "unifi-local-account",
-    "password": "CHANGE_ME",
-    "site": "default",
-    "rejectUnauthorized": false
-  },
-
-  "healthChecks": {
-    "enabled": true,
-    "timeoutSeconds": 5
-  },
-
   "liveModelCache": {
     "cacheSeconds": 45
+  },
+  "certificateDiscovery": {
+    "enabled": true,
+    "highDays": 7,
+    "mediumDays": 21,
+    "lowDays": 60,
+    "externalUseCertificates": {
+      "scottibyte.com": {
+        "note": "Optional example: certificate is used outside NPM, such as by another web server."
+      }
+    }
   }
 }
