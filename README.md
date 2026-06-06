@@ -102,7 +102,6 @@ At minimum, update:
 - npm.url
 - npm.username
 - npm.password
-- unifi settings if UniFi discovery is enabled
 
 The example config intentionally includes only two Incus servers so it is easy to understand.
 
