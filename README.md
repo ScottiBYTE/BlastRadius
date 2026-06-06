@@ -86,8 +86,15 @@ You can rename them to match your own environment, such as:
 
 ## 2. Create the Configuration File
 
-Copy the example configuration:
+Copy the example configuration from example.config.json:
 
+    mkdir -p data/incus-client
+
+    cp ~/.config/incus/client.crt data/incus-client/client.crt
+    cp ~/.config/incus/client.key data/incus-client/client.key
+
+    chmod 644 data/incus-client/client.crt
+    chmod 600 data/incus-client/client.key
     cp data/config.example.json data/config.json
 
 Edit the live configuration:
