@@ -325,6 +325,18 @@ The public template is:
 
 ---
 
-## License
+# 🌐 Community
 
-License details can be added before public release.
+## Community Support
+
+Need help with Blast Radius, Docker deployment, Incus profile management, container creation, or ScottiBYTE utilities?
+
+Join the ScottiBYTE Rocket.Chat community:
+
+[Join ScottiBYTE Rocket.Chat](https://go.rocket.chat/invite?host=chat.scottibyte.com&path=invite%2FaCh2oW)
+
+New users can start in `#general`. From there, you can find other ScottiBYTE project channels and community discussions.
+
+For bugs and feature requests, please continue to use GitHub Issues.
+For quick questions and community discussion, use Rocket.Chat.
+```
